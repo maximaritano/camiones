@@ -1,0 +1,21 @@
+import camiones.*
+import cosas.*
+
+describe "test camiones"{
+		
+	test""{
+		paqueteDeLadrillos.cantLadrillos(30)
+		contenedorPortuario.agregarCosa(knightRider)
+		contenedorPortuario.agregarCosa(bumblebee)
+		contenedorPortuario.agregarCosa(bateriaAntiaerea)
+		residuosRadioactivos.asignarPeso(100)
+		embalajeDeSeguridad.asignarCosa(residuosRadioactivos)
+		camion.cargar(paqueteDeLadrillos)
+		camion.cargar(contenedorPortuario)
+		camion.cargar(embalajeDeSeguridad)
+		assert.equals(2860, camion.pesoTotal())
+		assert.equals(true, camion.excedidoDePeso())
+		assert.equals({embalajeDeSeguridad}, camion.objetosPeligrosos(100))
+	}
+}
+
