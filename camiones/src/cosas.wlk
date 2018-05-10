@@ -92,14 +92,36 @@ object residuosRadioactivos{
 	method nivelPeligrosidad() = 200
 }
 
-object embalajeDeSeguridad{
-	var cosaEmbalada
+class EmbalajeDeSeguridadEstandar{
+	var cosasEmbaladas = #{}
 	
 	method asignarCosa(cosa){
-		cosaEmbalada = cosa
+		cosasEmbaladas.add(cosa)
 	}
 	
-	method peso() = cosaEmbalada.peso()
+	method peso() = cosasEmbaladas.sum({cosa => cosa.peso()})
 	
-	method nivelPeligrosidad() = cosaEmbalada.nivelPeligrosidad() / 2
+	method nivelPeligrosidad(){
+		return (cosasEmbaladas.max({cosa => cosa.nivelPeligrosidad()})).nivelPeligrosidad()
+	}
+}
+
+class EmbalajeDeSeguridadLiviano inherits EmbalajeDeSeguridadEstandar{
+	override method nivelPeligrosidad(){
+		return if (cosasEmbaladas.sum({cosa => cosa.peso()}) < 200) 0 else super()
+	}
+}
+
+class EmbalajeDeSeguridadBolsaDeAserrin inherits EmbalajeDeSeguridadEstandar{
+	var cantAserrin
+	
+	method cantidadAserrin(cantidad){
+		cantAserrin = cantidad
+	}
+	
+	override method peso() = super() + cantAserrin
+	
+	override method nivelPeligrosidad(){
+		return super() - (10 * cantAserrin)
+	}
 }

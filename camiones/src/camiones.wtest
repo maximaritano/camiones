@@ -2,24 +2,37 @@ import camiones.*
 import cosas.*
 
 describe "test camiones"{
-		
-	test""{
+	var embalajeDeSeguridad1 = new EmbalajeDeSeguridadEstandar(cosasEmbaladas = #{residuosRadioactivos})
+	var embalajeDeSeguridadBolsaDeAserrin1 = new EmbalajeDeSeguridadBolsaDeAserrin(cantAserrin = 2, cosasEmbaladas = #{bumblebee}) 
+	var embalajeDeSeguridadEstandar1 = new EmbalajeDeSeguridadEstandar(cosasEmbaladas=#{bateriaAntiaerea, residuosRadioactivos})
+	var embalajeDeSeguridadLiviano1 = new EmbalajeDeSeguridadLiviano(cosasEmbaladas=#{knightRider})
+			
+	test"guia 4"{
 		paqueteDeLadrillos.cantLadrillos(30)
 		contenedorPortuario.agregarCosa(knightRider)
 		contenedorPortuario.agregarCosa(bumblebee)
 		contenedorPortuario.agregarCosa(bateriaAntiaerea)
 		residuosRadioactivos.asignarPeso(100)
-		embalajeDeSeguridad.asignarCosa(residuosRadioactivos)
 		camion.cargar(paqueteDeLadrillos)
 		camion.cargar(contenedorPortuario)
-		camion.cargar(embalajeDeSeguridad)
+		camion.cargar(embalajeDeSeguridad1)
 		assert.equals(2860, camion.pesoTotal())
 		assert.equals(true, camion.excedidoDePeso())
 		assert.equals(#{knightRider, bumblebee, bateriaAntiaerea}, contenedorPortuario.cosas())
 		assert.equals(bateriaAntiaerea, contenedorPortuario.objetoMasPeligroso())
 		assert.equals(100, contenedorPortuario.nivelPeligrosidad())
-		assert.equals(#{embalajeDeSeguridad, contenedorPortuario}, camion.objetosPeligrosos(99))
-		assert.equals(true, camion.puedeCircularEnRuta(101))
+		assert.equals(#{embalajeDeSeguridad1, contenedorPortuario}, camion.objetosPeligrosos(99))
+		assert.equals(true, camion.puedeCircularEnRuta(201))
+	}
+	
+	test"guia 6"{
+		residuosRadioactivos.asignarPeso(100)
+		assert.equals(802, embalajeDeSeguridadBolsaDeAserrin1.peso())
+		assert.equals(500, embalajeDeSeguridadLiviano1.peso())
+		assert.equals(400, embalajeDeSeguridadEstandar1.peso())
+		assert.equals(15-20, embalajeDeSeguridadBolsaDeAserrin1.nivelPeligrosidad())
+		assert.equals(10, embalajeDeSeguridadLiviano1.nivelPeligrosidad())
+		assert.equals(200, embalajeDeSeguridadEstandar1.nivelPeligrosidad())
 	}
 }
 
