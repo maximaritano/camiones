@@ -28,6 +28,6 @@ object camion{
 	}
 	
 	method puedeCircularEnRuta(nivelMaximoPeligrosidad){
-		return carga.any({cosa => cosa.nivelPeligrosidad() > nivelMaximoPeligrosidad})
+		return carga.all({cosa => cosa.nivelPeligrosidad() < nivelMaximoPeligrosidad})
 	}
 }

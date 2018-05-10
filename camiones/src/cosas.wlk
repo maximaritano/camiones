@@ -14,7 +14,7 @@ object bumblebee{
 	method peso() = 800
 	
 	method nivelPeligrosidad(){
-		return if (tipo = "auto") 15 else 30
+		return if (tipo == "auto") 15 else 30
 	}
 }
 
@@ -59,7 +59,7 @@ object bateriaAntiaerea{
 }
 
 object contenedorPortuario{
-	var cosas = #{}
+	var property cosas = #{}
 	
 	method agregarCosa(cosa){
 		cosas.add(cosa)
@@ -71,8 +71,12 @@ object contenedorPortuario{
 	
 	method peso() = 100 + cosas.sum({cosa => cosa.peso()})
 	
+	method objetoMasPeligroso(){
+		return cosas.max({producto => producto.nivelPeligrosidad()})
+	}
+	
 	method nivelPeligrosidad(){
-		return if (cosas.isEmpty()) 0 else cosas.max({cosa => cosa.nivelPeligrosidad()}) 
+		return if (cosas.isEmpty()) 0 else self.objetoMasPeligroso().nivelPeligrosidad() 
 	}
 }
 

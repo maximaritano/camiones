@@ -15,7 +15,11 @@ describe "test camiones"{
 		camion.cargar(embalajeDeSeguridad)
 		assert.equals(2860, camion.pesoTotal())
 		assert.equals(true, camion.excedidoDePeso())
-		assert.equals({embalajeDeSeguridad}, camion.objetosPeligrosos(100))
+		assert.equals(#{knightRider, bumblebee, bateriaAntiaerea}, contenedorPortuario.cosas())
+		assert.equals(bateriaAntiaerea, contenedorPortuario.objetoMasPeligroso())
+		assert.equals(100, contenedorPortuario.nivelPeligrosidad())
+		assert.equals(#{embalajeDeSeguridad, contenedorPortuario}, camion.objetosPeligrosos(99))
+		assert.equals(true, camion.puedeCircularEnRuta(101))
 	}
 }
 
